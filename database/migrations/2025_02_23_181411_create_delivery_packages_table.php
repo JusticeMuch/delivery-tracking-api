@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\Client;
+use App\Models\Delivery;
+use App\Models\DeliveryStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,6 +16,16 @@ return new class extends Migration
     {
         Schema::create('delivery_packages', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(Delivery::class);
+            $table->foreignId(Client::class);
+            $table->string("package_name");
+            $table->string("package_description")->nullable()->default(null);
+            $table->integer("weight")->nullable()->default(null);
+            $table->integer("height")->nullable()->default(null);
+            $table->integer("length")->nullabel()->default(null);
+            $table->integer("width")->nullable()->default(null);
+            $table->string("special_delivery_instructions")->nullable()->default(null);
+            $table->foreignIdFor(DeliveryStatus::class);
             $table->timestamps();
         });
     }
