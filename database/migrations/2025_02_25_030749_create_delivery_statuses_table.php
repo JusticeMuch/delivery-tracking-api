@@ -36,17 +36,17 @@ return new class extends Migration
                 "description" => "Delivery is rescheduled for another day (normally next business day)"
             ],
             [
-                "id" => 3,
+                "id" => 4,
                 "status" => "received",
                 "description" => "Delivery items have been received"
             ],
             [
-                "id" => 4,
+                "id" => 5,
                 "status" => "planned",
                 "description" => "Delivery is set to happen on a specific day"
             ],
             [
-                "id" => 4,
+                "id" => 6,
                 "status" => "out_for_delivery",
                 "description" => "Delivery driver has left to complete schedule with delivery on board"
             ]

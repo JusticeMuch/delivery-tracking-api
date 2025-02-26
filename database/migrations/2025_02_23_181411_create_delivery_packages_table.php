@@ -17,7 +17,6 @@ return new class extends Migration
         Schema::create('delivery_packages', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Delivery::class);
-            $table->foreignId(Client::class);
             $table->string("package_name");
             $table->string("package_description")->nullable()->default(null);
             $table->integer("weight")->nullable()->default(null);
