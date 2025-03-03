@@ -30,6 +30,18 @@ class Delivery extends Model
         return $this->hasMany(DeliveryLog::class);
     }
 
+    public function updateStatus($status, $logMessage){
+        $deliveryStatus = DeliveryStatus::where("status", $status)->first();
+        if ($deliveryStatus){
+            $this->delivery_status_id = $deliveryStatus->id;
+            DeliveryLog::create([
+                "delivery_id" => $this->id,
+                "delivery_status_id" => $deliveryStatus->id,
+                "log" => $logMessage
+            ]);
+        }
+    }
+
     public static function createDeliveryFromRequest(array $requestData, int $clientId){
         $delivery = self::create([
             "client_id" => $clientId,
@@ -50,7 +62,7 @@ class Delivery extends Model
             ]);
         }
 
-        $delivery->updateStatus("")
+        $delivery->updateStatus("planned", "New delivery");
 
         return $delivery;
     }

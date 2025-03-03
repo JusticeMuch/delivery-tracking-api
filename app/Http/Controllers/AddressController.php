@@ -114,7 +114,7 @@ class AddressController extends Controller
         $user = Auth::user();
 
         if ($user->client && $user->client->id !== $address->client->id){
-            return abort(401, "Cannot delete this adddress");
+            return abort(401, "Cannot delete this address");
         }
 
         $address->delete();

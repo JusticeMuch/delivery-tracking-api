@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\DeliverySchedule as DeliveryScheduleResource;
+use App\Models\DeliverySchedule;
 use App\Models\Driver;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -29,13 +31,27 @@ class DriverController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Get the delivery scheduled for that driver.
      */
-    public function deliveryScheduleByDate(Request $request)
+    public function deliverySchedules(Request $request)
     {
+        $driverId = Auth::user()->driver->id;
         $request->validate([
-            "scheduled_delivery_date" => "required|date"
+            "date_from" => "date",
+            "date_to" => "date"
         ]);
+
+        $query = DeliverySchedule::query()->where("driver_id", $driverId);
+
+        if (isset($request->date_from)){
+            $query->where("delivery_date", ">=",  $request->date_from);
+        }
+
+        if (isset($request->date_to)){
+            $query->where("delivery_date", "<=",  $request->date_to);
+        }
+
+        return DeliveryScheduleResource::collection($query->get());
     }
 
     /**

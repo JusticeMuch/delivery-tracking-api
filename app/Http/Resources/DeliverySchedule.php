@@ -14,6 +14,19 @@ class DeliverySchedule extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        $results = [
+            "id" => $this->id,
+            "delivery_date" => $this->delivery_date,
+            "amount_of_deliveries" => $this->amount_of_deliveries,
+            "deliveries_completed" => $this->deliveries_completed,
+            "completed" => $this->delivery_completed,
+            "deliveries" => []
+        ];
+
+        foreach ($this->deliveries as $delivery){
+            $results["deliveries"][] = Delivery::formatResponse($delivery);
+        }
+
+        return $results;
     }
 }

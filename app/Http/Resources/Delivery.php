@@ -14,18 +14,26 @@ class Delivery extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        return self::formatResponse($this);
+    }
+
+    public static function formatResponse($delivery){
         $results =  [
-            "id" => $this->id,
-            "client_id" => $this->client_id,
-            "scheduled_date" => $this->scheduled_date,
-            "special_delivery_instructions" => $this->special_delivery_instructions,
-            "tracking_code" => $this->tracking_code,
+            "id" => $delivery->id,
+            "client_id" => $delivery->client_id,
+            "scheduled_date" => $delivery->scheduled_date,
+            "special_delivery_instructions" => $delivery->special_delivery_instructions,
+            "tracking_code" => $delivery->tracking_code,
             "packages" => [],
             "logs" => [],
         ];
 
-        foreach ($this->package as $package){
+        foreach ($delivery->package as $package){
             $results["packages"][] = DeliveryPackage::formatReponse($package);
+        }
+
+        foreach ($delivery->logs as $log){
+            $results["logs"][] = DeliveryLog::formatReponse($package);
         }
 
         return $results;

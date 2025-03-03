@@ -20,7 +20,7 @@ return new class extends Migration
             $table->timestamp("delivery_date");
             $table->integer("amount_of_deliveries")->nullable()->default(null);
             $table->integer("deliveries_completed")->nullable()->default(null);
-            $table->boolean("delivery_completed")->nullable()->default(null);
+            $table->boolean("completed")->nullable()->default(null);
             $table->timestamps();
         });
     }
