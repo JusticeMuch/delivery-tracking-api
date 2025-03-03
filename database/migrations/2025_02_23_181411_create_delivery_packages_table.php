@@ -23,7 +23,6 @@ return new class extends Migration
             $table->integer("height")->nullable()->default(null);
             $table->integer("length")->nullabel()->default(null);
             $table->integer("width")->nullable()->default(null);
-            $table->string("special_delivery_instructions")->nullable()->default(null);
             $table->foreignIdFor(DeliveryStatus::class);
             $table->timestamps();
         });

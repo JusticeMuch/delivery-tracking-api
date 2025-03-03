@@ -21,4 +21,37 @@ class Delivery extends Model
     public function deliveryStatus(){
         return $this->hasOne(DeliveryStatus::class);
     }
+
+    public function packages(){
+        return $this->hasMany(DeliveryPackage::class);
+    }
+
+    public function logs(){
+        return $this->hasMany(DeliveryLog::class);
+    }
+
+    public static function createDeliveryFromRequest(array $requestData, int $clientId){
+        $delivery = self::create([
+            "client_id" => $clientId,
+            "scheduled_date" => $requestData["scheduled_date"],
+            "special_delivery_instructions" => $requestData["special_delivery_instructions"] ?? "",
+            "tracking_code" => strtoupper(uniqid())
+        ]);
+
+        foreach($requestData["packages"] as $package){
+            DeliveryPackage::create([
+                "delivery_id" => $delivery->id,
+                "package_name" => $package["package_name"],
+                "package_description" => $package["package_description"] ?? "",
+                "weight" => $package["weight"],
+                "height" => $package["height"],
+                "length" => $package["length"],
+                "width" =>  $package["width"],
+            ]);
+        }
+
+        $delivery->updateStatus("")
+
+        return $delivery;
+    }
 }

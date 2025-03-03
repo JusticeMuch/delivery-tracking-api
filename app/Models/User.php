@@ -6,12 +6,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Tymon\JWTAuth\Contracts\JWTSubject;
+use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable implements JWTSubject
+class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -34,6 +34,8 @@ class User extends Authenticatable implements JWTSubject
         'remember_token',
     ];
 
+    CONST ADMIN_ROLE = "admin";
+
     /**
      * Get the attributes that should be cast.
      *
@@ -48,20 +50,22 @@ class User extends Authenticatable implements JWTSubject
     }
 
     public function role(){
-        return $this->hasOne(UserRoles::class);
+        return $this->hasOne(UserRole::class);
+    }
+
+    public function client(){
+        return $this->belongsTo(Client::class);
+    }
+
+    public function driver(){
+        return $this->belongTo(Driver::class);
     }
 
     public function hasRole(string $role){
-        return $this->role->name === $role;
+        return $this->role->name === $role || $this->role === self::ADMIN_ROLE;
     }
 
-    public function getJWTIdentifier()
-    {
-        return $this->getKey();
-    }
-
-    public function getJWTCustomClaims()
-    {
-        return [];
+    public function getFormattedResponse(){
+        return array_merge($this->toArray , ["role" => $this->role->name]);
     }
 }

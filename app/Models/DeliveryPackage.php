@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class DeliveryPackages extends Model
+class DeliveryPackage extends Model
 {
     public function delivery(){
         return $this->hasOne(Delivery::class);

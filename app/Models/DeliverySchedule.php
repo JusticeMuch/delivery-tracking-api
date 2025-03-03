@@ -13,4 +13,8 @@ class DeliverySchedule extends Model
     public function deliveryRegion(){
         return $this->hasOne(DeliveryRegion::class);
     }
+
+    public function deliveries(){
+        return $this->belongsTo(Delivery::class);
+    }
 }

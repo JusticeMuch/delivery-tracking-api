@@ -21,11 +21,13 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Client::class);
             $table->foreignIdFor(Address::class);
-            $table->foreignIdFor(DeliverySchedule::class)->nullable()->default(null);;
-            $table->timestamp("scheduled_date")->nullable()->default(null);;
+            $table->foreignIdFor(DeliverySchedule::class)->nullable()->default(null);
+            $table->timestamp("scheduled_date")->nullable()->default(null);
             $table->timestamp("delivery_completed")->nullable()->default(null);;
             $table->foreignIdFor(DeliveryStatus::class);
             $table->bigInteger("rescheduled_delivery_id")->nullable()->default(null)->index();
+            $table->string("special_delivery_instructions")->nullable()->default(null);
+            $table->string("tracking_code");
             $table->timestamps();
         });
     }

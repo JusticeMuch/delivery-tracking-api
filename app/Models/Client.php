@@ -19,6 +19,6 @@ class Client extends Model
     }
 
     public function packages(){
-        return $this->hasMany(DeliveryPackages::class);
+        return $this->hasMany(DeliveryPackage::class);
     }
 }

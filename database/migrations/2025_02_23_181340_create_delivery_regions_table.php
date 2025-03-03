@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('delivery_regions', function (Blueprint $table) {
             $table->id();
-            $table->string("province");
-            $table->json("suburb");
+            $table->string("name")->unique();
+            $table->string("province")->nullable()->default(null);
+            $table->json("suburb")->nullable()->default(null);
             $table->timestamps();
         });
     }

@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Client::class);
-            $table->foreignIdFor(DeliveryRegion::class);
+            $table->foreignIdFor(Client::class)->nullable()->default(null);
+            $table->foreignIdFor(DeliveryRegion::class)->nullable()->default(null);
             $table->string("street_address_1")->nullable();
             $table->string("street_address_2")->nullable()->default(null);
             $table->string("suburb")->nullable()->default(null);

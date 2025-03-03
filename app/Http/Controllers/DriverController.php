@@ -4,23 +4,38 @@ namespace App\Http\Controllers;
 
 use App\Models\Driver;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DriverController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Select Delivery Region
      */
-    public function index()
+    public function updateDeliveryRegion(Request $request)
     {
-        //
+        $user = Auth::user();
+
+        $request->validate([
+            "delivery_region_id" => "required|numeric"
+        ]);
+
+        $user->client->update([
+            "delivery_region_id" => $request->delivery_region_id
+        ]);
+
+        return response([
+            "message" => "Delivery Region Updated"
+        ]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function deliveryScheduleByDate(Request $request)
     {
-        //
+        $request->validate([
+            "scheduled_delivery_date" => "required|date"
+        ]);
     }
 
     /**
